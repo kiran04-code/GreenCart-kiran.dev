@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser"
 import { checkAuth } from "./middleware/user.js"
 import { checksellerAuth } from "./middleware/seller.js"
 import connectCloudnary from "./config/cloudnary.js"
+import updateRoute from "./routes/cartUpdated.js"
 // const allOrigies = ["http://localhost:5173/"]
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -45,6 +46,7 @@ app.get("/checkseller",(req,res)=>{
 app.use("/api",userroutes,)
 app.use("/api",sellerRoute)
 app.use("/api",productRoute)
+app.use("/api",updateRoute)
 app.listen(port,(req,res)=>{
     console.log(`Server is running on port http://localhost:${port}`)
 })

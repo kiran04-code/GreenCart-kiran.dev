@@ -35,7 +35,7 @@ export const productList = async (req, res) => {
 // get prodyuct By Id  product/id
 export const ProductById = async (req, res) => {
     try {
-        const { id } = req.body.params
+        const { id } = req.body
         const product = await Product.findById({ id })
         res.json({
             success: true, product
@@ -51,7 +51,7 @@ export const ProductById = async (req, res) => {
 // change the stock --- / product/stock
 export const changeStock = async (req, res) => {
     try {
-        const { id, inStock } = req.body.params
+        const { id, inStock } = req.body
         const product = await Product.findByIdAndUpdate(id, { inStock })
         res.json({ success: true, product ,message:"Stock Updated"})
     } catch (error) {

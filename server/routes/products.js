@@ -1,11 +1,11 @@
 import express from "express";
-import { addproduct, changeStock, ProductById, productList } from "../controller/product";
-
+import { addproduct, ProductById, productList,changeStock } from "../controller/product.js";
+import { upload } from "../config/multer.js";
 const productRoute = express.Router()
-productRoute.post("/addproduct",addproduct)
+productRoute.post("/addproduct",upload.array(["image"]),addproduct)
 productRoute.get("/productList",productList)
-productRoute.get("/ProductById",ProductById)
-productRoute.get("/changeStock",changeStock)
+productRoute.get("/ProductById/id",ProductById)
+productRoute.get("/changeStock/id",changeStock)
 
 
 export default productRoute
