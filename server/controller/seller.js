@@ -30,7 +30,16 @@ export const sellerLogin = async (req, res) => {
   }
 };
 
-
+export const isAuth = async(req,res)=>{
+  try {
+    const userid = req.seller
+    const users = await seller.findById(userid).select("-password")
+    res.json({success:true,users})
+  } catch (error) {
+    console.log(error.message)
+    res.json({success:false,message:error.message})
+  }
+}
 export const sellerLogout = async(req,res)=>{
  try {
    res.clearCookie("seller", {

@@ -14,6 +14,7 @@ import { checksellerAuth } from "./middleware/seller.js"
 import connectCloudnary from "./config/cloudnary.js"
 import updateRoute from "./routes/cartUpdated.js"
 import AddressRoutes from "./routes/AddresRoutes.js"
+import orderRoutes from "./routes/Orders.js"
 // const allOrigies = ["http://localhost:5173/"]
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -49,6 +50,7 @@ app.use("/api",sellerRoute)
 app.use("/api",productRoute)
 app.use("/api",updateRoute)
 app.use("/api",AddressRoutes)
+app.use("/api",orderRoutes)
 app.listen(port,(req,res)=>{
     console.log(`Server is running on port http://localhost:${port}`)
 })
