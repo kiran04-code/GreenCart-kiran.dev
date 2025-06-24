@@ -1,5 +1,4 @@
 import Address from "../model/adress.js"
-import userId from "../model/adress.js"
 
 // Add ADDRESS --path - /api/address/add
 export const Addaddress = async (req, res) => {
@@ -21,7 +20,7 @@ export const Addaddress = async (req, res) => {
     }
 }
 
-// Get -Address :/adaress/get
+// Get -Address :/address/get
 
 export const getAddress = async (req, res) => {
     try {
