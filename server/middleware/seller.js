@@ -1,5 +1,5 @@
-import { validUser } from "../auth/jwt.js";
-export const checkAuth = (cookieName) => {
+import { validUser } from "../auth/sellerJwt.js";
+export const checksellerAuth = (cookieName) => {
   return (req, res, next) => {
     const token = req.cookies[cookieName]; // ✅ correct way to read cookies
 
@@ -9,10 +9,10 @@ export const checkAuth = (cookieName) => {
 
     try {
       const payload = validUser(token) // ✅ verify token
-      req.user = payload;
+      req.seller = payload;
     } catch (err) {
       console.error("Invalid token:", err.message);
-      req.user = null;
+      req.seller = null;
     }
 
     next(); // ✅ always call next

@@ -1,6 +1,7 @@
 import user from "../model/user.js";
 import bcrypt from "bcrypt";
 import { createToken } from "../auth/jwt.js";
+import { checkAuth } from "../middleware/user.js";
 export const hnadleUserSignup = async (req, res) => {
     const { firstName, email, password, } = req.body
 
@@ -132,4 +133,34 @@ export const handleLoginWithGoogle = async (req, res) => {
             error: error.message
         });
     }
+};
+
+export const authcheck = async ()=>{
+ try {
+   if(req.user){
+    const findUser = await user.findById(req.user)
+    res.json({
+      success:true,
+      message:"user is Authorized "
+    })
+  }
+ } catch (error) {
+  console.log(error)
+ }
+}
+export const logout = async (req, res) => {
+ try {
+   res.clearCookie("token_user_login", {
+    httpOnly: true,
+    secure: process.NODE_ENV ==="production"   ,    // only enable in production or HTTPS
+    sameSite: process.NODE_ENV ==="production" ?"none" :"strict"    // optional but adds CSRF protection
+  });
+
+  return res.json({
+    success: true,
+    message: "Logout successful!"
+  });
+ } catch (error) {
+  console.log(error)
+ }
 };

@@ -3,11 +3,10 @@ import dotenv from "dotenv";
 dotenv.config(); // important!
 
 const secretKey = process.env.JWT_TOKEN;
-export const createToken = (user) => {
+export const createTokenforSeller = (user) => {
   const payload = {
     _id: user._id,
     email: user.email,
-    firstName:user.firstName
   };
 
   const token = jwt.sign(payload, secretKey, {
