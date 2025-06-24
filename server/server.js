@@ -4,12 +4,14 @@ import  connectionwithDB  from "./config/db.js"
 import dotenv from "dotenv"
 import userroutes from "./routes/user.js"
 import sellerRoute from "./routes/seller.js"
+import productRoute from "./routes/products.js"
 import cors from "cors"
 dotenv.config()
 const app = express()
 import cookieParser from "cookie-parser"
 import { checkAuth } from "./middleware/user.js"
 import { checksellerAuth } from "./middleware/seller.js"
+import connectCloudnary from "./config/cloudnary.js"
 // const allOrigies = ["http://localhost:5173/"]
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -25,6 +27,7 @@ connectionwithDB(process.env.MONGODB_URL).then(()=>{
 }).catch((err)=>{
     console.log("ERROR",err)
 })
+await connectCloudnary()
 const port =  process.env.PORT  || 6002
 app.get("/api/status",(req,res)=>{
     res.send("Server is Working! with 200  Status Code")
@@ -41,6 +44,7 @@ app.get("/checkseller",(req,res)=>{
 })
 app.use("/api",userroutes,)
 app.use("/api",sellerRoute)
+app.use("/api",productRoute)
 app.listen(port,(req,res)=>{
     console.log(`Server is running on port http://localhost:${port}`)
 })
