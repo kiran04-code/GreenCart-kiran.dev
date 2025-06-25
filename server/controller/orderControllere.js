@@ -8,26 +8,38 @@ export const placeOrdersCOD = async(req,res)=>{
     const userId = req.user
     const {items,address} = req.body
     if(!address || items.length===0){
-        res.json({
+        return res.json({
             success:false,
             message:"missing Details"
         })
     }
 
-    let amount = await items.reduce(async(acc,currval)=>{
-         let product = await Product.findById(currval.product)
-         return(await acc) + product.offerPrice*items.quantity
-    },0)
-    amount+= Math.floor(amount*2/100)
-    const placeOrdersCODs = await Order.create({
-        userId,items,address,amount,paymentType:"COD"
-    })
-    res.json({
+    let amount = 0;
+
+for (const item of items) {
+  const product = await Product.findById(item.product);
+  if (product) {
+    amount += product.offerPrice * item.quantity;
+  }
+}
+
+// Add 2% additional charge
+amount += Math.floor(amount * 2 / 100);
+
+const placeOrdersCODs = await Order.create({
+  userId,
+  items,
+  address,
+  amount,
+  paymentType: "COD"
+});
+console.log(placeOrdersCODs)
+   return res.json({
         success:true ,placeOrdersCODs,message:"order placed SucessFull!"
     })
   } catch (error) {
     console.log(error.message)
-    res.json({
+   return res.json({
         success:false
     })
   }
@@ -37,11 +49,12 @@ export const placeOrdersCOD = async(req,res)=>{
 export const getorderofuser = async(req,res)=>{
   try {
     const userId = req.user
-    const dataOrder  = await Order.find({userId ,$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.Product ,address").sort({createdAt:-1})
+    const dataOrder  = await Order.find({userId ,$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.product ,address").sort({createdAt:-1})
+      console.log(dataOrder)
     res.json({
       success:true,
       message:"getUserOrder!",
-      dataOrder
+      orderdata :dataOrder
     })
   } catch (error) {
     console.log(error.message)
@@ -55,11 +68,11 @@ export const getorderofuser = async(req,res)=>{
 // order/admin/seller
 export const allorderData = async(req,res)=>{
  try {
-  const orders = await Order.find({$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.Product").sort({createAt:-1})
-  res.json({
+  const orders = await Order.find({$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.product").sort({createAt:-1})
+  return res.json({
     success:true,
     message:"get all orderds Data for Admin",
-    orders
+    orderdata:orders
   })
  } catch (error) {
   res.json({
