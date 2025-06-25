@@ -5,8 +5,12 @@ import user from "../model/user.js"
  try {
     const {cartItems}  = req.body 
    const   userId = req.user
-    const  result = await user.findByIdAndUpdate(userId,{cartItems})
-    res.json({success:true,message:"Cart Updated"},result)
+   const result = await user.findByIdAndUpdate(
+  userId,
+  { cartItems },
+  { new: true }
+);
+    res.json({success:true,message:"Cart Updated",result})
  } catch (error) {
     console.log(error.message)
     res.json({

@@ -34,10 +34,13 @@ export const isAuth = async(req,res)=>{
   try {
     const userid = req.seller
     const users = await seller.findById(userid).select("-password")
-    res.json({success:true,users})
+    if(users){
+         return res.json({success:true,message:"seller found"})
+    }
+   return  res.json({success:false,message:"seller not found"})
   } catch (error) {
     console.log(error.message)
-    res.json({success:false,message:error.message})
+    return res.json({success:false,message:error.message})
   }
 }
 export const sellerLogout = async(req,res)=>{

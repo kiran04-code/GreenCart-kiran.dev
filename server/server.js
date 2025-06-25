@@ -11,7 +11,7 @@ const app = express()
 import cookieParser from "cookie-parser"
 import { checkAuth } from "./middleware/user.js"
 import { checksellerAuth } from "./middleware/seller.js"
-import connectCloudnary from "./config/cloudnary.js"
+import  "./config/cloudnary.js"
 import updateRoute from "./routes/cartUpdated.js"
 import AddressRoutes from "./routes/AddresRoutes.js"
 import orderRoutes from "./routes/Orders.js"
@@ -30,7 +30,7 @@ connectionwithDB(process.env.MONGODB_URL).then(()=>{
 }).catch((err)=>{
     console.log("ERROR",err)
 })
-await connectCloudnary()
+
 const port =  process.env.PORT  || 6002
 app.get("/api/status",(req,res)=>{
     res.send("Server is Working! with 200  Status Code")

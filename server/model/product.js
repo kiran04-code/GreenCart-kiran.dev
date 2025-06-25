@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-}, { timestamps: true }); // adds createdAt and updatedAt automatically
+},{timestamps:true}); // adds createdAt and updatedAt automatically
 
 const Product = mongoose.models.Product || mongoose.model("Product", productSchema);
 

@@ -1,7 +1,6 @@
 import user from "../model/user.js";
 import bcrypt from "bcrypt";
 import { createToken } from "../auth/jwt.js";
-import { checkAuth } from "../middleware/user.js";
 export const hnadleUserSignup = async (req, res) => {
     const { firstName, email, password, } = req.body
 

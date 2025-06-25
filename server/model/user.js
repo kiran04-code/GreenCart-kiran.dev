@@ -14,10 +14,12 @@ const userShema = new mongoose.Schema({
         type:String,
         require:true
     },
-    cartItem: {
-  type: [String],
-  default: []
+   cartItems: {
+  type: Map,
+  of: Number, // or of: Object if you want more info per item
+  default: {}
 }
+
 
 })
 
