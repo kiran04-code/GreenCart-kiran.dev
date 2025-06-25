@@ -8,12 +8,12 @@ export const Addaddress = async (req, res) => {
         const Adress = await Address.create({
             ...adress, userId
         })
-        req.json({
-            success: true, message: "Address add!", Adress
+        return res.json({
+            success: true, message: "Address add!",
         })
     } catch (error) {
         console.log(error.message)
-        res.json({
+        return res.json({
             sucess: false,
             message: error.message
         })
@@ -25,14 +25,15 @@ export const Addaddress = async (req, res) => {
 export const getAddress = async (req, res) => {
     try {
         const userId = req.user
-        const getAdd = await Address.findById({ userId })
-        res.json({
+        const getAdd = await Address.find( {userId} )
+        return res.json({
             success: true,
-            getAdd
+            address:getAdd
         })
+       
     } catch (error) {
         console.log(error.message)
-        req.json({
+       return res.json({
             success: false,
             message: error.message
         })
