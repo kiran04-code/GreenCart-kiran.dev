@@ -33,7 +33,6 @@ const placeOrdersCODs = await Order.create({
   amount,
   paymentType: "COD"
 });
-console.log(placeOrdersCODs)
    return res.json({
         success:true ,placeOrdersCODs,message:"order placed SucessFull!"
     })
@@ -49,8 +48,7 @@ console.log(placeOrdersCODs)
 export const getorderofuser = async(req,res)=>{
   try {
     const userId = req.user
-    const dataOrder  = await Order.find({userId ,$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.product ,address").sort({createdAt:-1})
-      console.log(dataOrder)
+    const dataOrder  = await Order.find({userId ,$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.product").populate("address").populate("userId").sort({createdAt:-1})
     res.json({
       success:true,
       message:"getUserOrder!",
@@ -68,12 +66,13 @@ export const getorderofuser = async(req,res)=>{
 // order/admin/seller
 export const allorderData = async(req,res)=>{
  try {
-  const orders = await Order.find({$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.product").sort({createAt:-1})
+  const orders = await Order.find({$or:[{paymentType:"COD"},{isPaid:true}]}).populate("items.product").populate("address").sort({createAt:-1})
   return res.json({
     success:true,
     message:"get all orderds Data for Admin",
     orderdata:orders
   })
+  
  } catch (error) {
   res.json({
     success:false,
